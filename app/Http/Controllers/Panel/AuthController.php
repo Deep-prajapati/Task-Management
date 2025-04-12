@@ -232,13 +232,13 @@ class AuthController extends Controller
                 
                 if(!User::where('email', $data['email'])->exists())
                 {
-                    User::create([
-                        'name' => $data['name'],
-                        'email' => $data['email'],
-                        'password' => $data['password'],
-                        'id_verified' => true,
-                        'email_verified_at' => now()->format('Y-m-d H:i:s'),
-                    ]);
+                    $user = new User();
+                    $user->name = $data['name'];
+                    $user->email = $data['email'];
+                    $user->password = $data['password'];
+                    $user->id_verified = true;
+                    $user->email_verified_at = now()->format('Y-m-d H:i:s');
+                    $user->save();
                 }else{
                     User::where('email', $data['email'])->update([
                         'id_verified' => true,

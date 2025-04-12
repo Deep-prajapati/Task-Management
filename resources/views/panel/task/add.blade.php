@@ -38,7 +38,7 @@
                                             Start Date
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="date" name="start" class="form-control" id="start" required value="{{ now()->format('Y-m-d') }}">
+                                        <input type="date" name="start" class="form-control" id="start" required value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">

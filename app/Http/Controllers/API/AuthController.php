@@ -44,7 +44,7 @@ class AuthController extends Controller
         try {
             if(!User::where('email' , $request->email)->exists())
             {
-                return redirect()->json([
+                return response()->json([
                     'status' => false,
                     'message' => 'Email not found',
                     'required' => 'Valid Email',
@@ -56,7 +56,7 @@ class AuthController extends Controller
             
             if (!Hash::check($request->password, $user->password))
             {
-                return redirect()->json([
+                return response()->json([
                     'status' => false,
                     'message' => 'Invalid credentials',
                     'required' => 'Valid credentials',
@@ -72,7 +72,7 @@ class AuthController extends Controller
 
                 Mail::to($user->email)->send(new \App\Mail\WelcomeVerification($user->name, $user->otp));
 
-                return redirect()->json([
+                return response()->json([
                     'status' => true,
                     'message' => 'OTP send to your email',
                     'required' => 'OTP Verification',
@@ -98,7 +98,7 @@ class AuthController extends Controller
         } 
         catch (\Throwable $th) 
         {
-            return redirect()->json([
+            return response()->json([
                 'status' => false,
                 'message' => 'Something went wrong',
                 'required' => null,
@@ -161,7 +161,7 @@ class AuthController extends Controller
         } 
         catch (\Throwable $th) 
         {
-            return redirect()->json([
+            return response()->json([
                 'status' => false,
                 'message' => 'Something went wrong',
                 'required' => null,
@@ -211,7 +211,7 @@ class AuthController extends Controller
         } 
         catch (\Throwable $th) 
         {
-            return redirect()->json([
+            return response()->json([
                 'status' => false,
                 'message' => 'Something went wrong',
                 'required' => null,
