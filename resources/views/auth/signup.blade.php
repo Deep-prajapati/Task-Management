@@ -23,7 +23,7 @@
             <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-8 col-12 d-flex flex-column align-self-center ms-lg-auto me-lg-0 mx-auto">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('register') }}" method="post">
+                        <form action="{{ route('register.submit') }}" method="post">
                             @csrf
                             <div class="row">
                                 <div class="col-md-12 mb-3"> 
