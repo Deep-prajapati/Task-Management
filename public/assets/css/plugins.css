@@ -1,0 +1,20 @@
+@import url('main.css');
+@import url('perfect-scrollbar.css');
+@import url('structure.css');
+/*
+    Importing highlight.js CSS code 
+
+    Just for demo purpose only
+	
+	@Note:-  monokai-sublime.css stylesheet is for highliting the code;
+
+*/
+@import 'monokai-sublime.css';
+
+.ml-2{
+    margin-left: 0.5rem;
+}
+
+.m-auto{
+    margin: auto;
+}

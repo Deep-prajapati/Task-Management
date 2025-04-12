@@ -7,60 +7,253 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## Introduction
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This project appears to be a Laravel-based web application and RestAPI for Android Application, utilizing various technologies such as PHP, JavaScript, and CSS. The application is a task management system with features like task management, dashboard analytics, application connectivity with api's and user profiles.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Project Structure
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+The project structure is based on the Laravel framework, with the following directories and files:
 
-## Learning Laravel
+- `app`: Contains the application's core logic, including models, controllers, and middleware.
+- `bootstrap`: Holds the application's bootstrapping files, such as the `app.php` file, which configures the application.
+- `config`: Stores configuration files for the application, including the `flasher.php` file.
+- `database`: Contains the database migration files and the `seeds` directory for populating the database.
+- `public`: Holds the application's public-facing files, including the `index.php` file, which serves as the entry point for the application.
+- `resources`: Contains the application's resources, such as views, JavaScript files, and CSS files.
+- `routes`: Defines the application's routes, including the `console.php` file, which handles console commands.
+- `storage`: Stores the application's storage files, including the `framework` directory, which contains the application's framework files.
+- `tests`: Holds the application's tests, including unit tests and feature tests.
+- `vendor`: Contains the application's dependencies, installed via Composer.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Installation and Setup
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+To set up the project, follow these steps:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Clone the repository to your local machine.
+- Install the required dependencies using Composer by running the command composer install in the project's root directory.
+- Create a new database for the application and configure the database connection in the .env file.
+- Run the database migrations using the command php artisan migrate to create the necessary tables.
+- Seed the database with sample data using the command php artisan db:seed.
+- Start the development server using the command php artisan serve.
 
-## Laravel Sponsors
+## API's Documentation & Instructions
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Postman Collection file name is `TaskManagement.postman_collection.json` located in root directory import it into postman and run the api's according those instruction :point_down:
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Authentication Routes
 
-## Contributing
+> In Authentications we use `required` key to indication what we have to do after a successfully response.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Login: `POST /login`
+- Request Body:
+    - `email`: string (required)
+    - `password`: string (required)
+- Response:
+    - `status`: Boolen (Response Status)
+    - `message`: string (Shows what thing done by api)
+    - `required`: string (What to do next)
+    - `data`: object|array (Desired Data)
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Registration: `POST /registration`
+- Request Body:
+    - `name`: string (required)
+    - `email`: string (required)
+    - `password`: string (required)
+- Response:
+    - `status`: Boolen (Response Status)
+    - `message`: string (Shows what thing done by api)
+    - `required`: string (What to do next)
+    - `data`: object|array (Desired Data)
 
-## Security Vulnerabilities
+> After Registration user need to varify email by entering otp that they will receive on their mail
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+OTP Verification: `POST /otp/verification/{mode}`
+- Request Body:
+    - `otp`: integer (required)
+    - `data.name`: string (given on registration's response)
+    - `data.email`: string (given on registration's response)
+    - `data.otp`: integer (given on registration's response)
+    - `data.expired_at`: date (given on registration's response)
+    - `data.password`: string (given on registration's response)
+- Response:
+    - `status`: Boolen (Response Status)
+    - `message`: string (Shows what thing done by api)
+    - `required`: string (What to do next)
+    - `data`: object|array (Desired Data)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Mode: key specify that Which porpose api is use form like `welcome` or `reset`.
+
+
+Forget Password: `POST /forget/password`
+- Request Body:
+    - `email`: string (required)
+- Response:
+    - `status`: Boolen (Response Status)
+    - `message`: string (Shows what thing done by api)
+    - `required`: string (What to do next)
+    - `data`: object|array (Desired Data)
+
+
+Reset Password: `POST /reset/password`
+- Request Body:
+    - `password`: string (required)
+    - `confirm_password`: string (required)
+- Response:
+    - `status`: Boolen (Response Status)
+    - `message`: string (Shows what thing done by api)
+    - `required`: string (What to do next)
+    - `data`: object|array (Desired Data)
+
+
+Resend OTP: `GET /resend-otp`
+- Request Body: 
+    - `email`: string (required)
+- Response:
+    - `status`: Boolen (Response Status)
+    - `message`: string (Shows what thing done by api)
+    - `required`: string (What to do next)
+    - `data`: object|array (Desired Data)
+    
+
+> Check email api's can be use for real time email checking. that this is exists or not in database.
+
+
+Check Email: `GET /check/email`
+- Request Body: 
+    - `email`: string (required)
+- Response:
+    - `status`: Boolen (Response Status)
+    - `message`: string (Shows what thing done by api)
+    - `exists`: Boolen (Email Exists or not in database)
+
+
+Required Key indicates Those Values:
+
+- `Valid Email` : User need enter valid email.
+- `Valid credentials` : User need enter valid credentials.
+- `OTP Verification` : Need to verify OTP, throw user to otp verify screen.
+- `Corect OTP` : User enter wrong otp, He/she need to enter again.
+- `Resend OTP` : User's otp is expried, he/she need to get otp again then try.
+- `Reset Password` : user can reset their password.
+- `null` : nothing is Required.
+
+
+
+### Panel Routes
+
+Dashboard: `GET /dashboard`
+- Request Body: None
+- Response:
+    - `status`: Boolen (Response Status)
+    - `message`: string (Shows what thing done by api)
+    - `data`: object|array (Desired Data)
+
+
+Profile Info: `GET /profile/info`
+- Request Body: None
+- Response:
+    - `status`: Boolen (Response Status)
+    - `message`: string (Shows what thing done by api)
+    - `data`: object|array (Desired Data)
+
+
+Profile Update: `POST /profile/update`
+- Request Body:
+    - `name`: string (required)
+    - `email`: string (required)
+    - `profile image`: image (optional)
+- Response:
+    - `status`: Boolen (Response Status)
+    - `message`: string (Shows what thing done by api)
+    - `data`: object|array (Desired Data)
+
+
+Password Update: `POST /password/update`
+- Request Body:
+    - password: string (required)
+    - confirm_password: string (required)
+- Response:
+    - `status`: Boolen (Response Status)
+    - `message`: string (Shows what thing done by api)
+    - `data`: object|array (Desired Data)
+
+
+Task Store: `POST /task/add`
+- Request Body:
+    - name: string (required)
+    - description: string (required)
+    - start_date: date (required)
+    - due_date: date (required)
+- Response:
+    - `status`: Boolen (Response Status)
+    - `message`: string (Shows what thing done by api)
+    - `data`: object|array (Desired Data)
+
+
+Task List: `GET /task/list`
+- Request Body: 
+    - status: integer (optional)
+    - start: date (optional)
+    - due: date (optional)
+- Response:
+    - `status`: Boolen (Response Status)
+    - `message`: string (Shows what thing done by api)
+    - `data`: object|array (Desired Data)
+
+
+Task Status: `GET /task/status/{id}`
+- Request Body: None
+- Response:
+    - `status`: Boolen (Response Status)
+    - `message`: string (Shows what thing done by api)
+    - `data`: object|array (Desired Data)
+
+> In id parameter we need to pass list array id to change status that specific entry
+
+
+Task Edit: `GET /task/edit/{id}`
+Request Body: None
+- Response:
+    - `status`: Boolen (Response Status)
+    - `message`: string (Shows what thing done by api)
+    - `data`: object|array (Desired Data)
+
+> In id parameter we need to pass list array id to get that specific entry
+
+
+Task Update: `POST /task/update/{id}`
+- Request Body:
+    - name: string (required)
+    - description: string (required)
+    - start_date: date (required)
+    - due_date: date (required)
+- Response:
+    - `status`: Boolen (Response Status)
+    - `message`: string (Shows what thing done by api)
+    - `data`: object|array (Desired Data)
+
+> In id parameter we need to pass list array id to get that specific entry
+
+
+Task Cancel: `POST /task/cancel/{id}`
+- Request Body: None
+- Response:
+    - `status`: Boolen (Response Status)
+    - `message`: string (Shows what thing done by api)
+    - `data`: object|array (Desired Data)
+
+> In id parameter we need to pass list array id to Cancel that specific entry
+
+
+Task Delete: `DELETE /task/delete/{id}`
+- Request Body: None
+- Response:
+    - `status`: Boolen (Response Status)
+    - `message`: string (Shows what thing done by api)
+    - `data`: object|array (Desired Data)
+
+> In id parameter we need to pass list array id to delete that specific entry
